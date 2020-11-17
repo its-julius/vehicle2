@@ -50,7 +50,9 @@ class DeepSort:
 
         # Generate Detection
         detections = [Detection(b, conf, c, f) for b, conf, c, f in
-                      zip(bbox_tlwh, confidence, cls, features)]
+                      zip(bbox_tlwh, confidence, cls, features)
+                      if conf > self.min_confidence]
+
         # Run Non-Maximum Suppression
         boxes = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
